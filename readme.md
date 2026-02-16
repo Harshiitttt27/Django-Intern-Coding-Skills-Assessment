@@ -12,7 +12,7 @@ Constraints:
 - unique_together on (user, name) prevents duplicate habits per user.
 - UniqueConstraint on (habit, date) prevents duplicate logs per day.
 
-We do NOT store:
+do NOT store:
 - streak
 - total completions
 - weekly stats
@@ -23,14 +23,14 @@ These are derived values and calculated dynamically.
 
 ## PART 2 – Prevent Inactive Habit Logging
 
-We override clean() in HabitLog.
+override clean() in HabitLog.
 If habit.is_active is False, log creation raises ValidationError.
 
 ----------------------------------------------
 
 ## PART 3 – ORM Query
 
-We use annotate + Count with filter argument to fetch habits
+Use annotate + Count with filter argument to fetch habits
 completed at least 5 times in last 7 days.
 
 No raw SQL used.
@@ -42,7 +42,7 @@ No raw SQL used.
 Possible risks in naive view:
 
 ## 1. No ownership check
-If we fetch Habit using only id, a user may create logs for another user's habit.
+If i  fetch Habit using only id, a user may create logs for another user's habit.
 Solution: Always filter by user=request.user
 
 ## 2. No duplicate handling.
